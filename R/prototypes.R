@@ -21,7 +21,6 @@ complete_rand <- function(
   d <- numeric(sample_size)
   # Predictability
   g <- 0
-
   for(i in 1:sample_size) {
     trt[i] <- findInterval(rand_num[i], cw)
     n[i + 1, ] <- n[i, ]

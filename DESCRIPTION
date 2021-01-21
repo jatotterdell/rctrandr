@@ -3,9 +3,8 @@ Type: Package
 Title: Randomisation Designs for Randomised Clinical Trials
 Version: 0.0.1
 Authors@R: person("James", "Totterdell", email = "jatotterdell@gmail.com", role = c("aut", "cre")) 
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: ...
+License: MIT + file LICENSE
 Depends: R (>= 3.1.0)
 Encoding: UTF-8
 LazyData: true
