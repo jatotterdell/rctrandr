@@ -4,7 +4,7 @@
 \alias{MassWeightedUrnRand}
 \title{Mass-weighted Urn Randomisation Model}
 \value{
-Returns R6 object of class MassWeightedUrnRand
+Returns R6 object of class [MassWeightedUrnRand].
 }
 \description{
 A mass-weighted urn randomisation model class
@@ -15,9 +15,7 @@ A mass-weighted urn randomisation model class
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{alpha}}{Imbalance control parameter}
-
-\item{\code{mass}}{The current mass vector}
+\item{\code{imbalance_tolerance}}{Imbalance control parameter}
 }
 \if{html}{\out{</div>}}
 }
@@ -25,22 +23,26 @@ A mass-weighted urn randomisation model class
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{MassWeightedUrnRand$new()}}
-\item \href{#method-get_conditional_prob}{\code{MassWeightedUrnRand$get_conditional_prob()}}
-\item \href{#method-randomise}{\code{MassWeightedUrnRand$randomise()}}
+\item \href{#method-conditional_prob}{\code{MassWeightedUrnRand$conditional_prob()}}
+\item \href{#method-get_parameter_descriptions}{\code{MassWeightedUrnRand$get_parameter_descriptions()}}
 \item \href{#method-clone}{\code{MassWeightedUrnRand$clone()}}
 }
 }
 \if{html}{
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="arm_names">}\href{../../rctrandr/html/RandModel.html#method-arm_names}{\code{rctrandr::RandModel$arm_names()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_description">}\href{../../rctrandr/html/RandModel.html#method-get_description}{\code{rctrandr::RandModel$get_description()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_history">}\href{../../rctrandr/html/RandModel.html#method-get_history}{\code{rctrandr::RandModel$get_history()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_name">}\href{../../rctrandr/html/RandModel.html#method-get_name}{\code{rctrandr::RandModel$get_name()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_parameter_input_descriptions">}\href{../../rctrandr/html/RandModel.html#method-get_parameter_input_descriptions}{\code{rctrandr::RandModel$get_parameter_input_descriptions()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_rng">}\href{../../rctrandr/html/RandModel.html#method-get_rng}{\code{rctrandr::RandModel$get_rng()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_target">}\href{../../rctrandr/html/RandModel.html#method-get_target}{\code{rctrandr::RandModel$get_target()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_short_name">}\href{../../rctrandr/html/RandModel.html#method-get_short_name}{\code{rctrandr::RandModel$get_short_name()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_target_allocation">}\href{../../rctrandr/html/RandModel.html#method-get_target_allocation}{\code{rctrandr::RandModel$get_target_allocation()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="num_allocations">}\href{../../rctrandr/html/RandModel.html#method-num_allocations}{\code{rctrandr::RandModel$num_allocations()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="num_arms">}\href{../../rctrandr/html/RandModel.html#method-num_arms}{\code{rctrandr::RandModel$num_arms()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="print">}\href{../../rctrandr/html/RandModel.html#method-print}{\code{rctrandr::RandModel$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="random_allocation">}\href{../../rctrandr/html/RandModel.html#method-random_allocation}{\code{rctrandr::RandModel$random_allocation()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -51,19 +53,23 @@ A mass-weighted urn randomisation model class
 Creates a new instance of `MassWeightedUrnRand` class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MassWeightedUrnRand$new(
-  target = NULL,
+  target_allocation = NULL,
   history = NULL,
   rng_seed = NULL,
-  alpha = 5
+  imbalance_tolerance = 5
 )}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{target}}{The target allocation ratio}
+\item{\code{target_allocation}}{The target allocation ratio}
 
 \item{\code{history}}{The model history}
+
+\item{\code{rng_seed}}{The RNG seed for the model}
+
+\item{\code{imbalance_tolerance}}{The imbalance parameter}
 }
 \if{html}{\out{</div>}}
 }
@@ -72,20 +78,20 @@ A new `MassWeightedUrnRand` object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_conditional_prob"></a>}}
-\if{latex}{\out{\hypertarget{method-get_conditional_prob}{}}}
-\subsection{Method \code{get_conditional_prob()}}{
+\if{html}{\out{<a id="method-conditional_prob"></a>}}
+\if{latex}{\out{\hypertarget{method-conditional_prob}{}}}
+\subsection{Method \code{conditional_prob()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MassWeightedUrnRand$get_conditional_prob()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MassWeightedUrnRand$conditional_prob()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-randomise"></a>}}
-\if{latex}{\out{\hypertarget{method-randomise}{}}}
-\subsection{Method \code{randomise()}}{
+\if{html}{\out{<a id="method-get_parameter_descriptions"></a>}}
+\if{latex}{\out{\hypertarget{method-get_parameter_descriptions}{}}}
+\subsection{Method \code{get_parameter_descriptions()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{MassWeightedUrnRand$randomise(n)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{MassWeightedUrnRand$get_parameter_descriptions()}\if{html}{\out{</div>}}
 }
 
 }

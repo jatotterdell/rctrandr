@@ -15,15 +15,17 @@ A generic randomisation model from which specific models inherit.
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{name}}{The name of the RandModel}
+\item{\code{name}}{The name of the [RandModel]}
 
-\item{\code{short_name}}{The shorthand name of the RandModel}
+\item{\code{short_name}}{The shorthand name of the [RandModel]}
 
-\item{\code{description}}{A description of the RandModel}
+\item{\code{description}}{A description of the [RandModel]}
 
-\item{\code{target}}{The target allocation ratio/probabilities}
+\item{\code{target_allocation}}{The target allocation ratio/probabilities}
 
 \item{\code{rng_seed}}{The integer seed to use for generating allocations}
+
+\item{\code{history}}{The history of model allocations.}
 }
 \if{html}{\out{</div>}}
 }
@@ -33,13 +35,18 @@ A generic randomisation model from which specific models inherit.
 \item \href{#method-new}{\code{RandModel$new()}}
 \item \href{#method-print}{\code{RandModel$print()}}
 \item \href{#method-get_name}{\code{RandModel$get_name()}}
+\item \href{#method-get_short_name}{\code{RandModel$get_short_name()}}
 \item \href{#method-get_description}{\code{RandModel$get_description()}}
-\item \href{#method-get_target}{\code{RandModel$get_target()}}
+\item \href{#method-get_parameter_descriptions}{\code{RandModel$get_parameter_descriptions()}}
+\item \href{#method-get_parameter_input_descriptions}{\code{RandModel$get_parameter_input_descriptions()}}
+\item \href{#method-get_target_allocation}{\code{RandModel$get_target_allocation()}}
 \item \href{#method-get_history}{\code{RandModel$get_history()}}
 \item \href{#method-get_rng}{\code{RandModel$get_rng()}}
 \item \href{#method-num_arms}{\code{RandModel$num_arms()}}
+\item \href{#method-arm_names}{\code{RandModel$arm_names()}}
 \item \href{#method-num_allocations}{\code{RandModel$num_allocations()}}
-\item \href{#method-randomise}{\code{RandModel$randomise()}}
+\item \href{#method-conditional_prob}{\code{RandModel$conditional_prob()}}
+\item \href{#method-random_allocation}{\code{RandModel$random_allocation()}}
 \item \href{#method-clone}{\code{RandModel$clone()}}
 }
 }
@@ -53,7 +60,7 @@ Creates a new instance of this [R6][R6::R6Class] class.
   name = NULL,
   short_name = NULL,
   description = NULL,
-  target = NULL,
+  target_allocation = NULL,
   history = NULL,
   rng_seed = NULL
 )}\if{html}{\out{</div>}}
@@ -68,11 +75,11 @@ Creates a new instance of this [R6][R6::R6Class] class.
 
 \item{\code{description}}{Description.}
 
-\item{\code{target}}{Target allocation ratio}
-
 \item{\code{history}}{Randomisation model history}
 
 \item{\code{rng_seed}}{The RNG initial seed (integer)}
+
+\item{\code{target}}{Target allocation ratio}
 }
 \if{html}{\out{</div>}}
 }
@@ -101,29 +108,74 @@ Print a RandModel.
 \if{html}{\out{<a id="method-get_name"></a>}}
 \if{latex}{\out{\hypertarget{method-get_name}{}}}
 \subsection{Method \code{get_name()}}{
-Return the `RandModels` name.
+The name of the randomisation model.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RandModel$get_name()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A string giving the model name.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_short_name"></a>}}
+\if{latex}{\out{\hypertarget{method-get_short_name}{}}}
+\subsection{Method \code{get_short_name()}}{
+The short name of the randomisation model.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{RandModel$get_short_name()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A string giving the model short name.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_description"></a>}}
 \if{latex}{\out{\hypertarget{method-get_description}{}}}
 \subsection{Method \code{get_description()}}{
-Return the `RandModels` description
+The description of the randomisation model.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RandModel$get_description()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A string giving the model description.
+}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_target"></a>}}
-\if{latex}{\out{\hypertarget{method-get_target}{}}}
-\subsection{Method \code{get_target()}}{
+\if{html}{\out{<a id="method-get_parameter_descriptions"></a>}}
+\if{latex}{\out{\hypertarget{method-get_parameter_descriptions}{}}}
+\subsection{Method \code{get_parameter_descriptions()}}{
+The parameters required for the randomisation model.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{RandModel$get_parameter_descriptions()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A list giving the required model parameters.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_parameter_input_descriptions"></a>}}
+\if{latex}{\out{\hypertarget{method-get_parameter_input_descriptions}{}}}
+\subsection{Method \code{get_parameter_input_descriptions()}}{
+The parameters required by the randomisation model to generate an allocation.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{RandModel$get_parameter_input_descriptions()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A list giving the required model inputs.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_target_allocation"></a>}}
+\if{latex}{\out{\hypertarget{method-get_target_allocation}{}}}
+\subsection{Method \code{get_target_allocation()}}{
 Return the target allocation for the model
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RandModel$get_target()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{RandModel$get_target_allocation()}\if{html}{\out{</div>}}
 }
 
 }
@@ -141,21 +193,39 @@ Return the history of the model
 \if{html}{\out{<a id="method-get_rng"></a>}}
 \if{latex}{\out{\hypertarget{method-get_rng}{}}}
 \subsection{Method \code{get_rng()}}{
-Return the state of the RNG of the model
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RandModel$get_rng()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+The state of the RNG of the model.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-num_arms"></a>}}
 \if{latex}{\out{\hypertarget{method-num_arms}{}}}
 \subsection{Method \code{num_arms()}}{
-Return the number of arms
+Return the number of arms.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RandModel$num_arms()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+The number of arms in the model.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-arm_names"></a>}}
+\if{latex}{\out{\hypertarget{method-arm_names}{}}}
+\subsection{Method \code{arm_names()}}{
+Return the names of the arms
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{RandModel$arm_names()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A string vector
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-num_allocations"></a>}}
@@ -171,24 +241,27 @@ A table giving the number of allocations to each arm.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-randomise"></a>}}
-\if{latex}{\out{\hypertarget{method-randomise}{}}}
-\subsection{Method \code{randomise()}}{
-Generate randomisations from the model.
+\if{html}{\out{<a id="method-conditional_prob"></a>}}
+\if{latex}{\out{\hypertarget{method-conditional_prob}{}}}
+\subsection{Method \code{conditional_prob()}}{
+Return the current conditional allocation probability given current state.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RandModel$randomise(n)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{RandModel$conditional_prob()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{n}}{The number of assignments to generate}
-}
-\if{html}{\out{</div>}}
-}
 \subsection{Returns}{
-A vector of arm allocations of length `n`.
+A numeric vector with one element per arm giving that arms allocation probability.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-random_allocation"></a>}}
+\if{latex}{\out{\hypertarget{method-random_allocation}{}}}
+\subsection{Method \code{random_allocation()}}{
+Generate a single allocation from the randomisation model
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{RandModel$random_allocation()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

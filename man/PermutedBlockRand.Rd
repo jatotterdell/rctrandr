@@ -22,15 +22,20 @@ A permuted block randomisation model class
 \if{html}{
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="arm_names">}\href{../../rctrandr/html/RandModel.html#method-arm_names}{\code{rctrandr::RandModel$arm_names()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="conditional_prob">}\href{../../rctrandr/html/RandModel.html#method-conditional_prob}{\code{rctrandr::RandModel$conditional_prob()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_description">}\href{../../rctrandr/html/RandModel.html#method-get_description}{\code{rctrandr::RandModel$get_description()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_history">}\href{../../rctrandr/html/RandModel.html#method-get_history}{\code{rctrandr::RandModel$get_history()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_name">}\href{../../rctrandr/html/RandModel.html#method-get_name}{\code{rctrandr::RandModel$get_name()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_parameter_descriptions">}\href{../../rctrandr/html/RandModel.html#method-get_parameter_descriptions}{\code{rctrandr::RandModel$get_parameter_descriptions()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_parameter_input_descriptions">}\href{../../rctrandr/html/RandModel.html#method-get_parameter_input_descriptions}{\code{rctrandr::RandModel$get_parameter_input_descriptions()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_rng">}\href{../../rctrandr/html/RandModel.html#method-get_rng}{\code{rctrandr::RandModel$get_rng()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_target">}\href{../../rctrandr/html/RandModel.html#method-get_target}{\code{rctrandr::RandModel$get_target()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_short_name">}\href{../../rctrandr/html/RandModel.html#method-get_short_name}{\code{rctrandr::RandModel$get_short_name()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_target_allocation">}\href{../../rctrandr/html/RandModel.html#method-get_target_allocation}{\code{rctrandr::RandModel$get_target_allocation()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="num_allocations">}\href{../../rctrandr/html/RandModel.html#method-num_allocations}{\code{rctrandr::RandModel$num_allocations()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="num_arms">}\href{../../rctrandr/html/RandModel.html#method-num_arms}{\code{rctrandr::RandModel$num_arms()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="print">}\href{../../rctrandr/html/RandModel.html#method-print}{\code{rctrandr::RandModel$print()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="randomise">}\href{../../rctrandr/html/RandModel.html#method-randomise}{\code{rctrandr::RandModel$randomise()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="random_allocation">}\href{../../rctrandr/html/RandModel.html#method-random_allocation}{\code{rctrandr::RandModel$random_allocation()}}\out{</span>}
 }
 \out{</details>}
 }

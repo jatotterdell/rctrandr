@@ -16,22 +16,26 @@ A complete randomisation model class
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{CompleteRand$new()}}
-\item \href{#method-get_conditional_prob}{\code{CompleteRand$get_conditional_prob()}}
-\item \href{#method-randomise}{\code{CompleteRand$randomise()}}
 \item \href{#method-clone}{\code{CompleteRand$clone()}}
 }
 }
 \if{html}{
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="arm_names">}\href{../../rctrandr/html/RandModel.html#method-arm_names}{\code{rctrandr::RandModel$arm_names()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="conditional_prob">}\href{../../rctrandr/html/RandModel.html#method-conditional_prob}{\code{rctrandr::RandModel$conditional_prob()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_description">}\href{../../rctrandr/html/RandModel.html#method-get_description}{\code{rctrandr::RandModel$get_description()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_history">}\href{../../rctrandr/html/RandModel.html#method-get_history}{\code{rctrandr::RandModel$get_history()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_name">}\href{../../rctrandr/html/RandModel.html#method-get_name}{\code{rctrandr::RandModel$get_name()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_parameter_descriptions">}\href{../../rctrandr/html/RandModel.html#method-get_parameter_descriptions}{\code{rctrandr::RandModel$get_parameter_descriptions()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_parameter_input_descriptions">}\href{../../rctrandr/html/RandModel.html#method-get_parameter_input_descriptions}{\code{rctrandr::RandModel$get_parameter_input_descriptions()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_rng">}\href{../../rctrandr/html/RandModel.html#method-get_rng}{\code{rctrandr::RandModel$get_rng()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_target">}\href{../../rctrandr/html/RandModel.html#method-get_target}{\code{rctrandr::RandModel$get_target()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_short_name">}\href{../../rctrandr/html/RandModel.html#method-get_short_name}{\code{rctrandr::RandModel$get_short_name()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="get_target_allocation">}\href{../../rctrandr/html/RandModel.html#method-get_target_allocation}{\code{rctrandr::RandModel$get_target_allocation()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="num_allocations">}\href{../../rctrandr/html/RandModel.html#method-num_allocations}{\code{rctrandr::RandModel$num_allocations()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="num_arms">}\href{../../rctrandr/html/RandModel.html#method-num_arms}{\code{rctrandr::RandModel$num_arms()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="print">}\href{../../rctrandr/html/RandModel.html#method-print}{\code{rctrandr::RandModel$print()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="rctrandr" data-topic="RandModel" data-id="random_allocation">}\href{../../rctrandr/html/RandModel.html#method-random_allocation}{\code{rctrandr::RandModel$random_allocation()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -41,55 +45,22 @@ A complete randomisation model class
 \subsection{Method \code{new()}}{
 Creates a new instance of `CompleteRand` class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompleteRand$new(target = NULL, history = NULL, rng_seed = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CompleteRand$new(target_allocation = NULL, history = NULL, rng_seed = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{target}}{The target allocation ratio}
+\item{\code{history}}{The model history of allocations. If NULL assumes no history.}
 
-\item{\code{history}}{The model history}
+\item{\code{rng_seed}}{The RNG initial seed in the form of `.Random.seed`.}
 
-\item{\code{rng_seed}}{The RNG initial seed}
+\item{\code{target}}{A (named) numeric vector giving the target allocation ratio.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 A new `CompleteRand` object.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_conditional_prob"></a>}}
-\if{latex}{\out{\hypertarget{method-get_conditional_prob}{}}}
-\subsection{Method \code{get_conditional_prob()}}{
-Return the conditional probability vector.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompleteRand$get_conditional_prob()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-A numeric vector giving the current conditional probability of assignment.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-randomise"></a>}}
-\if{latex}{\out{\hypertarget{method-randomise}{}}}
-\subsection{Method \code{randomise()}}{
-Generate `n` randomisations from the model
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CompleteRand$randomise(n)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{n}}{The number of randomisations to generate}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-An integer vector giving the treatment number for each randomisation.
 }
 }
 \if{html}{\out{<hr>}}

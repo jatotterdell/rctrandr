@@ -3,61 +3,50 @@
 #' @description A mass-weighted urn randomisation model class
 #'
 #' @name MassWeightedUrnRand
-#' @return Returns R6 object of class MassWeightedUrnRand
+#' @return Returns R6 object of class [MassWeightedUrnRand].
 #' @export
 MassWeightedUrnRand <- R6::R6Class("MassWeightedUrnRand",
   inherit = RandModel,
   public = list(
 
-    #' @field alpha Imbalance control parameter
-    alpha = 5,
-    #' @field mass The current mass vector
-    mass = NULL,
+    #' @field imbalance_tolerance Imbalance control parameter
+    imbalance_tolerance = 5,
 
     #' @description
     #' Creates a new instance of `MassWeightedUrnRand` class.
     #'
-    #' @param target The target allocation ratio
+    #' @param target_allocation The target allocation ratio
     #' @param history The model history
+    #' @param rng_seed The RNG seed for the model
+    #' @param imbalance_tolerance The imbalance parameter
     #' @return A new `MassWeightedUrnRand` object.
     initialize = function(
-      target = NULL,
+      target_allocation = NULL,
       history = NULL,
       rng_seed = NULL,
-      alpha = 5) {
+      imbalance_tolerance = 5) {
       super$initialize(
         "MassWeightedUrnRand",
         "MWUR",
         "Mass-weighted urn randomisation",
-        target,
+        target_allocation,
         history,
         rng_seed)
-      self$alpha <- alpha
-      self$mass  <- alpha * target / sum(target)
+      self$imbalance_tolerance <- imbalance_tolerance
     },
 
-    get_conditional_prob = function() {
+    conditional_prob = function() {
       n <- self$num_allocations()
-      w <- self$target / sum(self$target)
-      p <- pmax(self$alpha * w - n + (sum(n) + 1)*w, 0)
+      w <- self$target_allocation / sum(self$target_allocation)
+      p <- pmax(self$imbalance_tolerance * w - n + (sum(n) + 1)*w, 0)
       return(p / sum(p))
     },
 
-    randomise = function(n) {
-      # Persist existing RNG into R session
-      if(!exists(".Random.seed", .GlobalEnv)) set.seed(NULL)
-      assign(".Random.seed", self$get_rng(), envir = .GlobalEnv)
-      # Generate allocations
-      y <- numeric(n)
-      for(i in 1:n) {
-        p <- self$get_conditional_prob()
-        u <- runif(1)
-        y[i] <- findInterval(u, cumsum(c(0, p)))
-        self$history <- y[i]
-      }
-      # Save the updated RNG state and history
-      private$.rng <- .GlobalEnv$.Random.seed
-      y
+    get_parameter_descriptions = function() {
+      list(
+        "target_allocation" = self$target_allocation,
+        "imbalance_tolerance" = self$imbalance_tolerance
+      )
     }
   )
 )

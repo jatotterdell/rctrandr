@@ -12,48 +12,21 @@ CompleteRand <- R6::R6Class("CompleteRand",
     #' @description
     #' Creates a new instance of `CompleteRand` class.
     #'
-    #' @param target The target allocation ratio
-    #' @param history The model history
-    #' @param rng_seed The RNG initial seed
+    #' @param target A (named) numeric vector giving the target allocation ratio.
+    #' @param history The model history of allocations. If NULL assumes no history.
+    #' @param rng_seed The RNG initial seed in the form of `.Random.seed`.
     #' @return A new `CompleteRand` object.
     initialize = function(
-      target = NULL,
+      target_allocation = NULL,
       history = NULL,
       rng_seed = NULL) {
         super$initialize(
           "CompleteRand",
           "CR",
           "Complete randomisation",
-          target,
+          target_allocation,
           history,
           rng_seed)
-      },
-
-    #' @description
-    #' Return the conditional probability vector.
-    #'
-    #' @return A numeric vector giving the current conditional probability of assignment.
-    get_conditional_prob = function() {
-      return( self$target / sum(self$target) )
-    },
-
-    #' @description
-    #' Generate `n` randomisations from the model
-    #'
-    #' @param n The number of randomisations to generate
-    #' @return An integer vector giving the treatment number for each randomisation.
-    randomise = function(n) {
-      # Persist existing RNG
-      if(!exists(".Random.seed", .GlobalEnv)) set.seed(NULL)
-      assign(".Random.seed", self$get_rng(), envir = .GlobalEnv)
-      # Generate allocations
-      p <- self$get_conditional_prob()
-      u <- runif(n)
-      y <- findInterval(u, cumsum(c(0, p)))
-      # Save the updated RNG state and history
-      private$.rng <- .GlobalEnv$.Random.seed
-      self$history <- y
-      y
-    }
+      }
   )
 )

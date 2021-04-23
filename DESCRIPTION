@@ -13,3 +13,7 @@ Imports:
     R62S3,
     R6,
     randtoolbox
+Suggests: 
+    rmarkdown,
+    knitr
+VignetteBuilder: knitr

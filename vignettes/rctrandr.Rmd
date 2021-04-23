@@ -1,0 +1,27 @@
+---
+title: "rctrandr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{rctrandr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+To install
+
+```r
+remotes::install_github("jatotterdell/rctrandr")
+```
+
+To load
+
+```{r setup}
+library(rctrandr)
+```

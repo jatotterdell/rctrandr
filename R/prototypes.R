@@ -140,6 +140,40 @@ block_urn_rand <- function(
 }
 
 
+wei_urn_rand <- function(
+  n_arms = 4,
+  sample_size = 100,
+  w = 1,
+  alpha = 0,
+  beta = 2
+) {
+  # Sample size
+  n <- matrix(0, sample_size + 1, n_arms)
+  # Random number
+  y <- runif(sample_size)
+  # Conditional selection probability
+  p <- matrix(0, sample_size, n_arms)
+  # Treatment assignment
+  trt <- rep(0, sample_size)
+  for(i in 1:sample_size) {
+    p[i, ] <- (w + alpha*n[i, ] + beta*(i - 1 - n[i, ])) / (w*n_arms + alpha*(i - 1) + beta*(i - 1)*(n_arms - 1))
+    # Generate allocation
+    trt[i] <- findInterval(y[i], c(0, cumsum(p[i, ])))
+    # Update sample sizes
+    n[i + 1, ] <- n[i, ]
+    n[i + 1, trt[i]] <- n[i + 1, trt[i]] + 1
+  }
+  return(
+    list(
+      rand_num = y,
+      trt = trt,
+      sample_size = n,
+      selection_prob = p
+    )
+  )
+}
+
+
 
 #' Modified Wei's Urn Design
 #'
@@ -153,6 +187,57 @@ modified_wei_urn_rand <- function(
   beta
 ) {
 
+}
+
+
+#' @references Zhao, W., & Ramakrishnan, V. (2016). Generalization of Wei’s urn design to unequal allocations in sequential clinical trials. Contemporary Clinical Trials Communications, 2, 75–79. https://doi.org/10.1016/j.conctc.2015.12.007
+modified_urn_pa <- function() {
+
+}
+
+#' Modified Urn Design with Equal Allocation
+#'
+#' @description
+#' A generalization of Wei's urn design for unequal allocations.
+#'
+#' @param target_alloc The target allocation ratio.
+#'
+#' @references Zhao, W., & Ramakrishnan, V. (2016). Generalization of Wei’s urn design to unequal allocations in sequential clinical trials. Contemporary Clinical Trials Communications, 2, 75–79. https://doi.org/10.1016/j.conctc.2015.12.007
+modified_urn_ea <- function(
+  target_alloc,
+  sample_size,
+  alpha = 0,
+  beta = 2
+) {
+  M <- sum(target_alloc)
+  if(!(M > 1)) stop("sum(target_alloc) must be > 1.")
+  arms <- length(target_alloc)
+  prob_alloc <- target_alloc / sum(target_alloc)
+  # Sample size
+  n <- matrix(0, sample_size + 1, arms)
+  # Random number
+  y <- runif(sample_size)
+  # Conditional selection probability
+  p <- matrix(0, sample_size, arms)
+  # Treatment assignment
+  trt <- rep(0, sample_size)
+  for(i in 1:sample_size) {
+    p[i, ] <- (target_alloc + alpha * n[i, ] + beta * target_alloc * (i - 1 - n[i, ]) + beta * n[i, ] * (target_alloc - 1)) /
+                (M + alpha * (i - 1) + beta * (M - 1) * ( i - 1))
+    # Generate allocation
+    trt[i] <- findInterval(y[i], c(0, cumsum(p[i, ])))
+    # Update sample sizes
+    n[i + 1, ] <- n[i, ]
+    n[i + 1, trt[i]] <- n[i + 1, trt[i]] + 1
+  }
+  return(
+    list(
+      rand_num = y,
+      trt = trt,
+      sample_size = n,
+      selection_prob = p
+    )
+  )
 }
 
 #' Mass-weighted urn randomisation
